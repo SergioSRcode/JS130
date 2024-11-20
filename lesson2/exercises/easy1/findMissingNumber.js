@@ -24,10 +24,11 @@ function missing(arr) {
   let inbetweens = [];
 
   for (let num = arr[0]; num < arr[arr.length - 1]; num++) {
+    if (arr.includes(num)) continue;
     inbetweens.push(num);
   }
 
-  return inbetweens.filter(num => !arr.includes(num));
+  return inbetweens;
 }
 
 let p = console.log;
