@@ -95,14 +95,15 @@ class ItemManager {
   }
 
   update(skuCode, infoObj) {
-    //go into items
     this.items.forEach(item => {
       if (item.sku === skuCode) Object.assign(item, infoObj);
     });
+  }
 
-    //filter out the correct item with indicated sku code
-    // override property indicated inside the infoObj argument
-  
+  delete(skuCode) {
+    let itemIdx = this.items.findIndex(item => item.sku === skuCode);
+
+    this.items.splice(itemIdx, 1);
   }
 }
 
@@ -112,7 +113,9 @@ let john = new ItemManager();
 john.create("foot ball", "sports", 2);
 john.create("basketball", "sports", 5);
 console.log(john.items);
-john.update("FOOSP", {quantity: 10});
+// john.update("FOOSP", {quantity: 10});
+// console.log(john.items);
+john.delete("FOOSP");
 console.log(john.items);
 
 // console.log(ball);
