@@ -94,15 +94,26 @@ class ItemManager {
     this.items.push(newItem);
   }
 
+  update(skuCode, infoObj) {
+    //go into items
+    this.items.forEach(item => {
+      if (item.sku === skuCode) Object.assign(item, infoObj);
+    });
+
+    //filter out the correct item with indicated sku code
+    // override property indicated inside the infoObj argument
   
+  }
 }
 
 // let ball = new Item("foot ball", "sports", 2);
 let john = new ItemManager();
 
 john.create("foot ball", "sports", 2);
+john.create("basketball", "sports", 5);
 console.log(john.items);
-
+john.update("FOOSP", {quantity: 10});
+console.log(john.items);
 
 // console.log(ball);
 // console.log(ball.sku);
