@@ -105,18 +105,25 @@ class ItemManager {
 
     this.items.splice(itemIdx, 1);
   }
+
+  inStock() {
+    let list = [];
+    let itemsInStock = this.items.filter(item => item.quantity > 0);
+    itemsInStock.forEach(item => list.push(item.itemName));
+    console.log(list.join(", "));
+  }
 }
 
 // let ball = new Item("foot ball", "sports", 2);
 let john = new ItemManager();
 
 john.create("foot ball", "sports", 2);
-john.create("basketball", "sports", 5);
-console.log(john.items);
+john.create("basketball", "sports", 3);
+// console.log(john.items);
+john.inStock();
 // john.update("FOOSP", {quantity: 10});
 // console.log(john.items);
-john.delete("FOOSP");
-console.log(john.items);
+// console.log(john.items);
 
 // console.log(ball);
 // console.log(ball.sku);
