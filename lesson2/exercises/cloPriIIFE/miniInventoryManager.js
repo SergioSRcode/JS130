@@ -81,26 +81,34 @@ class Item {
   }
 }
 
-// class ItemManager {
-//   constructor() {
-//     this.items = [];
-//   }
+class ItemManager {
+  constructor() {
+    this.items = [];
+  }
 
-//   create(item, category, amount) {
-//     let newItem = new Item(item, category, amount);
-//     let values = Object.values(newItem);
+  create(item, category, amount) {
+    let newItem = new Item(item, category, amount);
+    let values = Object.values(newItem);
 
-//     if (values.includes(false)) return false;
-//   }
-// }
+    if (values.includes(false)) return false;
+    this.items.push(newItem);
+  }
 
-let ball = new Item("foot ball", "sports", 2);
+  
+}
 
-console.log(ball);
-console.log(ball.sku);
-console.log(ball.itemName);
-console.log(ball.category);
-console.log(ball.quantity);
+// let ball = new Item("foot ball", "sports", 2);
+let john = new ItemManager();
+
+john.create("foot ball", "sports", 2);
+console.log(john.items);
+
+
+// console.log(ball);
+// console.log(ball.sku);
+// console.log(ball.itemName);
+// console.log(ball.category);
+// console.log(ball.quantity);
 
 // ItemManager.create('basket ball', 'sports', 0);           // valid item
 // ItemManager.create('asd', 'sports', 0);
