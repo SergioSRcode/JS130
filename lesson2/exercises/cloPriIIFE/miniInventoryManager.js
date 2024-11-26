@@ -112,6 +112,14 @@ class ItemManager {
     itemsInStock.forEach(item => list.push(item.itemName));
     console.log(list.join(", "));
   }
+
+  itemsInCategory(category) {
+    let list = [];
+    let itemsOfCategory = this.items.filter(item => item.category === category);
+    itemsOfCategory.forEach(item => list.push(item.itemName));
+
+    console.log(list.join(", "));
+  }
 }
 
 // let ball = new Item("foot ball", "sports", 2);
@@ -119,11 +127,15 @@ let john = new ItemManager();
 
 john.create("foot ball", "sports", 2);
 john.create("basketball", "sports", 3);
+john.create("milchreis", "cooking", 1);
 // console.log(john.items);
-john.inStock();
+// john.inStock();
 // john.update("FOOSP", {quantity: 10});
 // console.log(john.items);
 // console.log(john.items);
+john.itemsInCategory("sports");
+john.itemsInCategory("cooking");
+
 
 // console.log(ball);
 // console.log(ball.sku);
