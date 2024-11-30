@@ -133,6 +133,7 @@ class ReportManager {
 
   createReporter(skuCode) {
     let reporterItems = this.items.slice();  // using closure to access a copy of items
+
     return {
       itemInfo() {
         reporterItems.forEach(itemManager => {
@@ -148,17 +149,71 @@ class ReportManager {
     };
   }
 
+  reportInStock() {
+    this.items.forEach(itemManager => itemManager.inStock());
+  }
 }
 
+let itemManager = new ItemManager();
+let reportManager = new ReportManager();
+
+itemManager.create('basket ball', 'sports', 0);           // valid item
+itemManager.create('asd', 'sports', 0);
+itemManager.create('soccer ball', 'sports', 5);           // valid item
+itemManager.create('football', 'sports');
+itemManager.create('football', 'sports', 3);              // valid item
+itemManager.create('kitchen pot', 'cooking items', 0);
+itemManager.create('kitchen pot', 'cooking', 3);          // valid item
+// returns list with the 4 valid items
+itemManager.items;
+
+reportManager.init(itemManager);
+// logs soccer ball,football,kitchen pot
+reportManager.reportInStock();
+
+itemManager.update('SOCSP', { quantity: 0 });
+// returns list with the item objects for football and kitchen pot
+itemManager.inStock();
+// football,kitchen pot
+reportManager.reportInStock();
+
+// returns list with the item objects for basket ball, soccer ball, and football
+itemManager.itemsInCategory('sports');
+
+itemManager.delete('SOCSP');
+// returns list the remaining 3 valid items (soccer ball is removed from the list)
+itemManager.items;
+
+let kitchenPotReporter = reportManager.createReporter('KITCO');
+kitchenPotReporter.itemInfo();
+// logs
+// skuCode: KITCO
+// itemName: kitchen pot
+// category: cooking
+// quantity: 3
+
+itemManager.update('KITCO', { quantity: 10 });
+kitchenPotReporter.itemInfo();
+// logs
+// skuCode: KITCO
+// itemName: kitchen pot
+// category: cooking
+// quantity: 10
+
+
 // let ball = new Item("foot ball", "sports", 2);
-let john = new ItemManager();
-let peter = new ReportManager();
-john.create("foot ball", "sports", 2);
-peter.init(john);
-let footballReporter = peter.createReporter("FOOSP");
-footballReporter.itemInfo();
-// john.create("basketball", "sports", 3);
+// let john = new ItemManager();
+// let peter = new ReportManager();
+// john.create("foot ball", "sports", 2);
+// john.create("basketball", "sports", 0);
 // john.create("milchreis", "cooking", 1);
+// peter.init(john);
+
+// peter.reportInStock();
+// let footballReporter = peter.createReporter("FOOSP");
+// footballReporter.itemInfo();
+
+
 // // console.log(john.items);
 // // john.inStock();
 // // john.update("FOOSP", {quantity: 10});
@@ -173,46 +228,3 @@ footballReporter.itemInfo();
 // console.log(ball.itemName);
 // console.log(ball.category);
 // console.log(ball.quantity);
-
-// ItemManager.create('basket ball', 'sports', 0);           // valid item
-// ItemManager.create('asd', 'sports', 0);
-// ItemManager.create('soccer ball', 'sports', 5);           // valid item
-// ItemManager.create('football', 'sports');
-// ItemManager.create('football', 'sports', 3);              // valid item
-// ItemManager.create('kitchen pot', 'cooking items', 0);
-// ItemManager.create('kitchen pot', 'cooking', 3);          // valid item
-// // returns list with the 4 valid items
-// ItemManager.items;
-
-// ReportManager.init(ItemManager);
-// // logs soccer ball,football,kitchen pot
-// ReportManager.reportInStock();
-
-// ItemManager.update('SOCSP', { quantity: 0 });
-// // returns list with the item objects for football and kitchen pot
-// ItemManager.inStock();
-// // football,kitchen pot
-// ReportManager.reportInStock();
-
-// // returns list with the item objects for basket ball, soccer ball, and football
-// ItemManager.itemsInCategory('sports');
-
-// ItemManager.delete('SOCSP');
-// // returns list the remaining 3 valid items (soccer ball is removed from the list)
-// ItemManager.items;
-
-// let kitchenPotReporter = ReportManager.createReporter('KITCO');
-// kitchenPotReporter.itemInfo();
-// // logs
-// // skuCode: KITCO
-// // itemName: kitchen pot
-// // category: cooking
-// // quantity: 3
-
-// ItemManager.update('KITCO', { quantity: 10 });
-// kitchenPotReporter.itemInfo();
-// // logs
-// // skuCode: KITCO
-// // itemName: kitchen pot
-// // category: cooking
-// // quantity: 10
