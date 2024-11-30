@@ -37,8 +37,10 @@ class Item {
   }
 
   static validateLength(minChars, word) {
-    word = Item.removeSpaces(word);
-    if (minChars > word.length) return false;
+    let newWord = Item.removeSpaces(word);
+    if (minChars > newWord.length) return false;
+    // word = Item.removeSpaces(word);
+    // if (minChars > word.length) return false;
 
     return word;
   }
@@ -68,7 +70,7 @@ class Item {
   }
 
   constructor(item, category, amount) {
-    this.itemName = Item.validateLength(5, item);
+    this.itemName = Item.validateItem(item);
     this.category = Item.validateCategory(category); // min 5 chars, only 1 word
     this.sku = Item.getSKUCode(item, category);// items first 3 letters + 2 of cat
     this.quantity = Item.validateQuantity(amount); // cannot be blank
