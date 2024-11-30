@@ -122,19 +122,50 @@ class ItemManager {
   }
 }
 
+class ReportManager {
+  constructor() {
+    this.items = [];
+  }
+
+  init(itemManagerObj) {
+    this.items.push(itemManagerObj);
+  }
+
+  createReporter(skuCode) {
+    let reporterItems = this.items.slice();  // using closure to access a copy of items
+    return {
+      itemInfo() {
+        reporterItems.forEach(itemManager => {
+          itemManager.items.forEach(item => {
+            if (item.sku === skuCode) {
+              let keyValuePairs = Object.entries(item);
+
+              keyValuePairs.forEach(pair => console.log(`${pair[0]}: ${pair[1]}`));
+            }
+          });
+        });
+      }
+    };
+  }
+
+}
+
 // let ball = new Item("foot ball", "sports", 2);
 let john = new ItemManager();
-
+let peter = new ReportManager();
 john.create("foot ball", "sports", 2);
-john.create("basketball", "sports", 3);
-john.create("milchreis", "cooking", 1);
-// console.log(john.items);
-// john.inStock();
-// john.update("FOOSP", {quantity: 10});
-// console.log(john.items);
-// console.log(john.items);
-john.itemsInCategory("sports");
-john.itemsInCategory("cooking");
+peter.init(john);
+let footballReporter = peter.createReporter("FOOSP");
+footballReporter.itemInfo();
+// john.create("basketball", "sports", 3);
+// john.create("milchreis", "cooking", 1);
+// // console.log(john.items);
+// // john.inStock();
+// // john.update("FOOSP", {quantity: 10});
+// // console.log(john.items);
+// // console.log(john.items);
+// john.itemsInCategory("sports");
+// john.itemsInCategory("cooking");
 
 
 // console.log(ball);
